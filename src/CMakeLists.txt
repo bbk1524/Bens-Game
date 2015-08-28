@@ -64,7 +64,6 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_TTF_LIBRARY}
 )
 
-
 # These copies need to be run every time the game is compiled in case something changed
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/config ${CMAKE_SOURCE_DIR}/bin/config/
