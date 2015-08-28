@@ -20,6 +20,8 @@ public:
 	Uint8 g;
 	Uint8 b;
 	Uint8 a;
+	bool valid{ true };
+
 
 	bool draw()
 	{

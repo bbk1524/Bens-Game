@@ -17,7 +17,10 @@ public:
 
 	std::vector<Box> boxes;
 
-	Screen() = default;
+	Screen(std::string layout_file)
+	{
+		valid = init(layout_file);
+	}
 
 	~Screen() = default;
 
@@ -97,8 +100,14 @@ public:
 		return result;
 	}
 
+	bool is_valid() const
+	{
+		return valid;
+	}
 	//private:
 	Graphics_System graphics_system;
+	bool valid{ true };
+
 };
 
 
