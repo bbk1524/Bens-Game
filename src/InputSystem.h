@@ -4,6 +4,7 @@
 #include "Definitions.h"
 #include <map>
 #include <SDL.h>
+
 class Input_System {
 public:
 	Input_System()
@@ -15,7 +16,7 @@ public:
 
 	bool init()
 	{
-		//keys 
+		//keys
 		current_events[game_event::LEFT] = false;
 		current_events[game_event::RIGHT] = false;
 		current_events[game_event::UP] = false;

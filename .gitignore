@@ -1,2 +1,5 @@
-/bin
-/build
+_build/
+Build/
+Game/
+bin/
+build/

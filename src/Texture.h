@@ -7,7 +7,7 @@
 
 //TODO:
 //Questions about scaling. How will I scale an object?
-// How should I set the scale?  
+// How should I set the scale? 
 
 class Texture 
 {

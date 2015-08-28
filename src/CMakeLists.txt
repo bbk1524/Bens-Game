@@ -1,18 +1,9 @@
 # Name the Project and give files
-project(${PROJECT_NAME})
+# set(GAME_NAME Nested_Rectangles)
 
-# Usage: create_unmade <file1>...
-# creates files if they don't exist. Starts looking in the directory of the CMakeLists.txt file it's called in
-function(create_unmade)
-    foreach(word ${ARGV}) # ${ARGV} expands to all arguments
-        if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${word})
-            message("---- creating: ${word} ----")
-            file(WRITE ${word} "")
-        endif()
-    endforeach()
-endfunction()
+project(Bens-Game)
 
-set(Misc_Files
+add_executable(${PROJECT_NAME}
 	Source.cpp
 	Box.h
 	Box.cpp
@@ -27,25 +18,7 @@ set(Misc_Files
 	InputSystem.cpp
 	Texture.h
 	Texture.cpp
-	DisableWarningsStart.h
-	DisableWarningsEnd.h
 )
-
-create_unmade(${Misc_Files})
-
-SOURCE_GROUP(Misc_Files FILES ${Misc_Files})
-source_group(lib\\SDL2_gfx FILES ${SDL2_gfx})
-SOURCE_GROUP(lib\\tinyxml FILES ${tinyxml})
-source_group(lib\\tinyxml2 FILES ${tinyxml2})
-
-add_executable(${PROJECT_NAME}
-	${Misc_Files}
-	${SDL2_gfx}
-	${tinyxml}
-	${tinyxml2}
-)
-
-target_compile_definitions(${PROJECT_NAME} PUBLIC TIXML_USE_STL)
 
 # Includes..
 include_directories(
@@ -54,6 +27,8 @@ include_directories(
 	${SDL2_MIXER_INCLUDE_DIR}
 	${SDL2_TTF_INCLUDE_DIR}
 #	${Box2D_SOURCE_DIR}
+	${tinyxml_SOURCE_DIR}
+	${SDL2_gfx_SOURCE_DIR}
 )
 
 # What it should link against
@@ -62,11 +37,25 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_IMAGE_LIBRARY}
 	${SDL2_MIXER_LIBRARY}
 	${SDL2_TTF_LIBRARY}
+#	Box2D
+	tinyxml
+	SDL2_gfx
 )
+# add warnings to all projects
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PUBLIC /W4 /wd4100)
+else(MSVC)
+    target_compile_options(${PROJECT_NAME} PUBLIC -std=c++1y -Wall -Wextra -pedantic -Wno-unused-parameter)
+endif(MSVC)
+
+# Tell VS where to build the executable for both debug and release versions
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin")
 
 # These copies need to be run every time the game is compiled in case something changed
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/config ${CMAKE_SOURCE_DIR}/bin/config/
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Config ${CMAKE_SOURCE_DIR}/bin/Config/
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${CMAKE_SOURCE_DIR}/bin/assets/
 )
 
