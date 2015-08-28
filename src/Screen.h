@@ -34,7 +34,7 @@ public:
 			LOG_ERROR("Can't find file : %s", layout_file.c_str());
 			return false;
 		}
-		TiXmlElement* node = doc.FirstChildElement("box");
+		TiXmlElement* node = doc.FirstChildElement("box"); 
 		if (!node)
 		{
 			TiXmlHandle hDoc(&doc);
