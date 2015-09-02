@@ -3,3 +3,5 @@ Build/
 Game/
 bin/
 build/
+.ycm_extra_conf.py
+*.pyc

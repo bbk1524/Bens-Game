@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 3.1)
 # Solution name
 project(Bens-Game-Solution)
 
+# Supposed to help YCM for vim completion
+set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
+
 # Find dynamic libraries
 # include dynamic libraries with:
 # include_directories(<target_name> ${<dynamic_library_name>_INCLUDE_DIR})
