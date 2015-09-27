@@ -12,28 +12,41 @@ function(create_unmade)
     endforeach()
 endfunction()
 
-set(Source_Files
+set(Add_Me_To_Exe "")
+
+# Usage: make_group <name> <file1>...
+# creates a files, puts them in a source group, and adds them to the exe list
+function(make_group name)
+    create_unmade(${ARGN}) # ARGN expands to all unexpected arguments. In our case, everything after the first arg, name
+	#append _Files to the name
+    source_group(${name}_Files FILES ${ARGN})
+	# ${Add_Me_To_Exe} will be linked soon :)
+	set(Add_Me_To_Exe ${Add_Me_To_Exe} ${ARGN} PARENT_SCOPE)
+endfunction()
+
+make_group(Misc
 	Source.cpp
-	Box.h
-	Box.cpp
 	Game.h
 	Game.cpp
-	GraphicsSystem.h
-	GraphicsSystem.cpp
 	Definitions.h
-	Screen.h
-	Screen.cpp
 	InputSystem.h
 	InputSystem.cpp
+)
+
+make_group(Graphics
+	Box.h
+	Box.cpp
+	GraphicsSystem.h
+	GraphicsSystem.cpp
+	Screen.h
+	Screen.cpp
 	Texture.h
-	Texture.cpp
+	Texture.cpp	
 )
 
 add_executable(${PROJECT_NAME}
-        ${Source_Files}
+	${Add_Me_To_Exe}	
 )
-
-create_unmade(${Source_Files})
 
 # Includes..
 include_directories(
@@ -41,7 +54,7 @@ include_directories(
 	${SDL2_IMAGE_INCLUDE_DIR}
 	${SDL2_MIXER_INCLUDE_DIR}
 	${SDL2_TTF_INCLUDE_DIR}
-	${Box2D_SOURCE_DIR}
+	# ${Box2D_SOURCE_DIR}
 	${tinyxml_SOURCE_DIR}
 	${SDL2_gfx_SOURCE_DIR}
 	${tinyxml2_SOURCE_DIR}
@@ -53,7 +66,7 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_IMAGE_LIBRARY}
 	${SDL2_MIXER_LIBRARY}
 	${SDL2_TTF_LIBRARY}
-	Box2D
+	# Box2D
 	tinyxml
 	SDL2_gfx
 	tinyxml2
@@ -76,16 +89,3 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${CMAKE_SOURCE_DIR}/bin/assets/
 )
 
-if(MSVC)
-	# Find and copy 32-bit DLLs to Game folder
-	file(GLOB X86_DLL_FILES
-			${SDL2_WIN}/lib/x86/*.dll
-			${SDL2_IMAGE_WIN}/lib/x86/*.dll
-			${SDL2_MIXER_WIN}/lib/x86/*.dll
-			${SDL2_TTF_WIN}/lib/x86/*.dll
-	)
-	
-	# Important to note that this happens at the cmake step, not the game's compilation.
-	# If you remove these, re-run cmake to get them back.
-	file(COPY ${X86_DLL_FILES} DESTINATION ${CMAKE_SOURCE_DIR}/bin)
-endif()
