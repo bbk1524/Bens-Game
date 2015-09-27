@@ -97,11 +97,8 @@ find_library(SDL2_TTF_LIBRARY NAMES SDL2_ttf
 # Link with:
 # target_link_libraries(<target_name> <static_library_name>) #no ${} needed 
 
-# Add tinyXML
-add_subdirectory(lib/tinyxml EXCLUDE_FROM_ALL)
-
-# Add SDL2_gfx 
-add_subdirectory(lib/SDL2_gfx EXCLUDE_FROM_ALL)
+# Add libs
+add_subdirectory(lib EXCLUDE_FROM_ALL)
 
 add_subdirectory(assets)
 

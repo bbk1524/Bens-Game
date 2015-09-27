@@ -41,9 +41,10 @@ include_directories(
 	${SDL2_IMAGE_INCLUDE_DIR}
 	${SDL2_MIXER_INCLUDE_DIR}
 	${SDL2_TTF_INCLUDE_DIR}
-#	${Box2D_SOURCE_DIR}
+	${Box2D_SOURCE_DIR}
 	${tinyxml_SOURCE_DIR}
 	${SDL2_gfx_SOURCE_DIR}
+	${tinyxml2_SOURCE_DIR}
 )
 
 # What it should link against
@@ -52,9 +53,10 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_IMAGE_LIBRARY}
 	${SDL2_MIXER_LIBRARY}
 	${SDL2_TTF_LIBRARY}
-#	Box2D
+	Box2D
 	tinyxml
 	SDL2_gfx
+	tinyxml2
 )
 # add warnings to all projects
 if(MSVC)
@@ -83,7 +85,7 @@ if(MSVC)
 			${SDL2_TTF_WIN}/lib/x86/*.dll
 	)
 	
-	# Important to note that this happens at the cmake step, not the games compilation.
+	# Important to note that this happens at the cmake step, not the game's compilation.
 	# If you remove these, re-run cmake to get them back.
 	file(COPY ${X86_DLL_FILES} DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 endif()
