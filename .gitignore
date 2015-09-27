@@ -2,4 +2,4 @@ _build/
 Build/
 Game/
 bin/
-build/
+build*/
