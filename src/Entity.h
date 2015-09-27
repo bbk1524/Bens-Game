@@ -24,8 +24,8 @@ public:
 		}
 		return nullptr;
 	}
-	template <typename T, typename ...Args>
 
+	template <typename T, typename ...Args>
 	//pass this the args for component.init(), and it will forward them
 	void add_component(Args&&... args)
 	{

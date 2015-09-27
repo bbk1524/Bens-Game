@@ -2,6 +2,8 @@
 
 class Entity;
 
+//Also needs an init() method to work with Entity
+
 class Component
 {
 public:

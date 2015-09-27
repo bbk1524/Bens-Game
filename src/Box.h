@@ -138,8 +138,7 @@ public:
 		}
 		else
 		{
-			// LOG_ERROR("no color found");
-                        logger.log("no color found");
+			logger.log("no color found");
 			return false;
 		}
 

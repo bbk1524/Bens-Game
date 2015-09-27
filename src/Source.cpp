@@ -15,9 +15,6 @@ int main (int argc, char** argv)
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 	IMG_Init(IMG_INIT_PNG);
 
-        Logger logger;
-        logger.check(COND(5 == 4), FILE_INFO, 5, 4);
-
 	Game game;
 	game.run();
 	game.destroy();

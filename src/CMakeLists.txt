@@ -4,12 +4,12 @@ project(Bens-Game)
 # Usage: create_unmade <file1>...
 # creates files if they don't exist. Starts looking in the directory of the CMakeLists.txt file it's called in
 function(create_unmade)
-    foreach(word ${ARGV}) # ${ARGV} expands to all arguments
-        if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${word})
-            message("---- creating: ${word} ----")
-            file(WRITE ${word} "")
-        endif()
-    endforeach()
+	foreach(word ${ARGV}) # ${ARGV} expands to all arguments
+		if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${word})
+			message("---- creating: ${word} ----")
+			file(WRITE ${word} "")
+		endif()
+	endforeach()
 endfunction()
 
 set(Add_Me_To_Exe "")
@@ -17,9 +17,9 @@ set(Add_Me_To_Exe "")
 # Usage: make_group <name> <file1>...
 # creates a files, puts them in a source group, and adds them to the exe list
 function(make_group name)
-    create_unmade(${ARGN}) # ARGN expands to all unexpected arguments. In our case, everything after the first arg, name
+	create_unmade(${ARGN}) # ARGN expands to all unexpected arguments. In our case, everything after the first arg, name
 	#append _Files to the name
-    source_group(${name}_Files FILES ${ARGN})
+	source_group(${name}_Files FILES ${ARGN})
 	# ${Add_Me_To_Exe} will be linked soon :)
 	set(Add_Me_To_Exe ${Add_Me_To_Exe} ${ARGN} PARENT_SCOPE)
 endfunction()
@@ -82,9 +82,16 @@ target_link_libraries(${PROJECT_NAME}
 )
 # add warnings to all projects
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PUBLIC /W4 /wd4100)
+	# compile with high warnings, but omit the ones about unused parameters and declarations hiding class members
+	target_compile_options(${PROJECT_NAME} PUBLIC /W4 /wd4100 /wd4458)
 else(MSVC)
-    target_compile_options(${PROJECT_NAME} PUBLIC -std=c++1y -Wall -Wextra -pedantic -Wno-unused-parameter)
+	if(APPLE)
+		set(CSTD -std=c++1y)
+	else()
+		set(CSTD -std=c++14)
+	endif(APPLE)
+
+	target_compile_options(${PROJECT_NAME} PUBLIC ${CSTD} -Wall -Wextra -pedantic -Wno-unused-parameter)
 endif(MSVC)
 
 # Tell VS where to build the executable for both debug and release versions
