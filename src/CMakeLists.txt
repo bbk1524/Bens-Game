@@ -31,6 +31,8 @@ make_group(Misc
 	Definitions.h
 	InputSystem.h
 	InputSystem.cpp
+	Logger.h
+	Logger.cpp
 )
 
 make_group(Graphics
@@ -41,11 +43,18 @@ make_group(Graphics
 	Screen.h
 	Screen.cpp
 	Texture.h
-	Texture.cpp	
+	Texture.cpp
+)
+
+make_group(Components
+	Component.cpp
+	Component.h
+	Entity.cpp
+	Entity.h
 )
 
 add_executable(${PROJECT_NAME}
-	${Add_Me_To_Exe}	
+	${Add_Me_To_Exe}
 )
 
 # Includes..

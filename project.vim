@@ -3,7 +3,7 @@
 " directory
 " Folder in which script resides: (not safe for symlinks)
 let s:base_path = expand('<sfile>:p:h')
-let s:build_dir = s:base_path . "/build/make"
+let s:build_dir = s:base_path . "/build"
 let s:bin_dir = s:base_path . "/bin"
 let s:bin_name = "Bens-Game"
 
