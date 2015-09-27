@@ -1,9 +1,18 @@
 # Name the Project and give files
-# set(GAME_NAME Nested_Rectangles)
-
 project(Bens-Game)
 
-add_executable(${PROJECT_NAME}
+# Usage: create_unmade <file1>...
+# creates files if they don't exist. Starts looking in the directory of the CMakeLists.txt file it's called in
+function(create_unmade)
+    foreach(word ${ARGV}) # ${ARGV} expands to all arguments
+        if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${word})
+            message("---- creating: ${word} ----")
+            file(WRITE ${word} "")
+        endif()
+    endforeach()
+endfunction()
+
+set(Source_Files
 	Source.cpp
 	Box.h
 	Box.cpp
@@ -19,6 +28,12 @@ add_executable(${PROJECT_NAME}
 	Texture.h
 	Texture.cpp
 )
+
+add_executable(${PROJECT_NAME}
+        ${Source_Files}
+)
+
+create_unmade(${Source_Files})
 
 # Includes..
 include_directories(
