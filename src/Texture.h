@@ -41,6 +41,7 @@ public:
 	{
 		this->renderer = renderer;
 		SDL_Surface * bmp = SDL_LoadBMP(image_path.c_str());
+                assert(bmp != NULL);
 		this->texture = SDL_CreateTextureFromSurface(renderer, bmp);
 		assert(texture != NULL); //hi there
 		SDL_FreeSurface(bmp);
