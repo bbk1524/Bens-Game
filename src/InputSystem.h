@@ -36,12 +36,12 @@ public:
 		current_events[game_event::QUIT] = false;
 
 		//translate SDL_Events of type key to Game_Events (not as fast as switch-case, but cleaner)
-		tr_key[SDLK_LEFT] = game_event::LEFT;
-		tr_key.emplace(SDLK_RIGHT, game_event::RIGHT);
-		tr_key.emplace(SDLK_LEFT, game_event::LEFT);
-		tr_key.emplace(SDLK_UP, game_event::UP);
-		tr_key.emplace(SDLK_DOWN, game_event::DOWN);
-		tr_key.emplace(SDLK_f, game_event::ACTION_ONE);
+		//tr_key[SDLK_LEFT] = game_event::LEFT;
+		//tr_key.emplace(SDLK_RIGHT, game_event::RIGHT);
+		//tr_key.emplace(SDLK_LEFT, game_event::LEFT);
+		//tr_key.emplace(SDLK_UP, game_event::UP);
+		//tr_key.emplace(SDLK_DOWN, game_event::DOWN);
+		//tr_key.emplace(SDLK_f, game_event::ACTION_ONE);
 		//TODO: add the rest of my keys. 
 
 		//do that for mouse buttons too
@@ -49,6 +49,19 @@ public:
 		tr_mouse.emplace(SDL_BUTTON_RIGHT, game_event::RIGHT_MOUSE_DOWN);
 
 		return true;
+	}
+
+	game_event tr_SDLK(int SDLK)
+	{
+		switch (SDLK) 
+		{
+		case SDLK_LEFT: return game_event::LEFT;
+		case SDLK_RIGHT: return game_event::RIGHT;
+		case SDLK_UP: return game_event::UP;
+		case SDLK_DOWN: return game_event::DOWN;
+		case SDLK_f: return game_event::ACTION_ONE;
+		default: return game_event::OTHER;
+		}
 	}
 
 	void update()
@@ -70,7 +83,7 @@ public:
 				bool is_down = event.type == SDL_KEYDOWN;
 
 				//get the right game event, and map it to the bool
-				current_events[tr_key[event.key.keysym.sym]] = is_down;
+				current_events[tr_SDLK(event.key.keysym.sym)] = is_down;
 			}
 
 
@@ -116,7 +129,7 @@ private:
 	std::map<game_event, bool> current_events;
 	SDL_Event event;
 	//relying on the fact that an enum is implicitly converted to an int...
-	std::map<int, game_event> tr_key;
+	//std::map<int, game_event> tr_key;
 	std::map<int, game_event> tr_mouse;
 	int mouse_x;
 	int mouse_y;

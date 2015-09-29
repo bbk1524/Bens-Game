@@ -2,8 +2,8 @@
 #define GAME_H
 
 //Print Input System's Output (undeffed until I need it...)
-#define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) {std::cout << #EVENT << std::endl;}
-#undef PRINT_EVENT
+#define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) { logger.log(#EVENT);}
+//#undef PRINT_EVENT
 
 //#include "GraphicsSystem.h"
 #include "InputSystem.h"
@@ -35,6 +35,15 @@ public:
 		{
 			quit = true;
 		}
+
+#ifdef PRINT_EVENT
+		PRINT_EVENT(UP);
+		PRINT_EVENT(DOWN);
+		PRINT_EVENT(LEFT);
+		PRINT_EVENT(RIGHT);
+		PRINT_EVENT(ACTION_ONE);
+		PRINT_EVENT(OTHER);
+#endif
 
 		draw();
 	}

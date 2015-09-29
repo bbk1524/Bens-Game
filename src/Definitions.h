@@ -31,6 +31,7 @@ enum class game_event
 	ACTION_TWO,
 	LEFT_MOUSE_DOWN,
 	RIGHT_MOUSE_DOWN,
-	QUIT
+	QUIT,
+	OTHER //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
 };
 
