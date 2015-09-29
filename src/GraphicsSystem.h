@@ -51,10 +51,6 @@ public:
 		SDL_RenderClear(renderer); //TODO: get this back...
 	}
 
-	void draw() 
-	{
-		//my boxes will all draw themselves. I'm going to put the draw method in Screen instead.
-	}
 
 	void present() 
 	{

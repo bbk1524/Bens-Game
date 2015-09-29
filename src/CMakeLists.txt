@@ -29,6 +29,7 @@ make_group(Misc
 	Game.h
 	Game.cpp
 	Definitions.h
+	Definitions.cpp
 	InputSystem.h
 	InputSystem.cpp
 	Logger.h
@@ -36,14 +37,15 @@ make_group(Misc
 )
 
 make_group(Graphics
-	Box.h
-	Box.cpp
+	Graphics.h
+	Graphics.cpp
 	GraphicsSystem.h
 	GraphicsSystem.cpp
-	Screen.h
-	Screen.cpp
-	Texture.h
-	Texture.cpp
+)
+
+make_group(Engine
+	Engine.h
+	Engine.cpp
 )
 
 make_group(Components
@@ -51,6 +53,8 @@ make_group(Components
 	Component.h
 	Entity.cpp
 	Entity.h
+	Texture.h
+	Texture.cpp
 )
 
 add_executable(${PROJECT_NAME}

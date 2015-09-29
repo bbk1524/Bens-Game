@@ -5,6 +5,8 @@
 #include <map>
 #include <SDL.h>
 
+//Note, this class only registers input when the game window is open, NOT when only the console is up!
+
 class Input_System {
 public:
 	Input_System()
@@ -39,6 +41,7 @@ public:
 		tr_key.emplace(SDLK_LEFT, game_event::LEFT);
 		tr_key.emplace(SDLK_UP, game_event::UP);
 		tr_key.emplace(SDLK_DOWN, game_event::DOWN);
+		tr_key.emplace(SDLK_f, game_event::ACTION_ONE);
 		//TODO: add the rest of my keys. 
 
 		//do that for mouse buttons too

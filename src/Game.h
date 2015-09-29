@@ -1,37 +1,30 @@
 #ifndef GAME_H
 #define GAME_H
 
+//Print Input System's Output (undeffed until I need it...)
+#define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) {std::cout << #EVENT << std::endl;}
+#undef PRINT_EVENT
+
 //#include "GraphicsSystem.h"
 #include "InputSystem.h"
-#include "Screen.h"
 #include "Definitions.h"
-#include "Texture.h"
+#include "Logger.h"
+#include "Graphics.h"
+
+extern Logger logger;
+
 
 class Game {
 public:
 
-	//TODO: rm
-	Texture image;
-
 	Game()
-		: screen(base_path + "config/layout.xml")
 	{
-		const std::string layout_path = base_path + "config/layout.xml";
-		input_system.init();
-		const std::string image_path = base_path + "assets/images/hello.bmp";
-		image.init(screen.graphics_system.get_renderer(), image_path, *screen.get_box_by_name("Game"));
-		if (!(screen.is_valid() && image.is_valid() && input_system.is_valid()))
-		{
-			valid = false;
-		}
+		bool init = input_system.init();
+		logger.check(COND(init), FILE_INFO);
 	}
-	~Game() = default;
-
-	bool destroy()
+	~Game()
 	{
-		screen.destroy();
 
-		return true;
 	}
 
 	//gimme a frame
@@ -48,13 +41,7 @@ public:
 
 	void draw()
 	{
-		screen.graphics_system.begin();
-
-		screen.draw_boxes();
-
-		image.draw();
-
-		screen.graphics_system.present();
+		graphics.draw();
 	}
 
 	//gimme all da frames
@@ -74,8 +61,8 @@ public:
 private:
 	bool quit{ false };
 	bool valid{ true };
-	Screen screen;
 	Input_System input_system;
+	Graphics graphics;
 };
 
 #endif 

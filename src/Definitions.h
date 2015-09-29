@@ -1,31 +1,11 @@
-#ifndef DEFINITIONS_H
-#define DEFINITIONS_H
-
-#include "Logger.h"
+#pragma once
 
 #include <SDL.h>
 #include <string>
 
-std::string get_base_path()
-{
-	char * base_path_tmp = SDL_GetBasePath();
-	if (base_path_tmp)
-	{
-		std::string base_path(base_path_tmp);
-		SDL_free(base_path_tmp);
-		return base_path;
-	}
-	else
-	{
-		std::string base_path("base path undetermined");
-		return base_path;
-	}
-}
+std::string get_base_path();
 
 const std::string base_path = get_base_path();
-
-//Global logger. Not thread safe :)
-Logger logger;
 
 //You can format arguments using printf notations: EX: LOG_ERROR("problem with file %s", filename);
 //See http://c.learncodethehardway.org/book/ex20.html for more detail
@@ -54,4 +34,3 @@ enum class game_event
 	QUIT
 };
 
-#endif

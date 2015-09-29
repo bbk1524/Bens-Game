@@ -1,5 +1,4 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -74,5 +73,3 @@ private:
 	SDL_Texture * texture;
 	bool valid{ true };
 };
-
-#endif
