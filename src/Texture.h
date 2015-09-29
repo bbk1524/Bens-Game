@@ -23,16 +23,16 @@ public:
 	
 	~Texture() = default;
 
-	bool init(SDL_Renderer * renderer, std::string image_path, Box & box)
+	bool init(SDL_Renderer * renderer, std::string image_path, int x1, int y1, int x2, int y2)
 	{
 		this->renderer = renderer;
 		SDL_Surface * bmp = SDL_LoadBMP(image_path.c_str());
 		this->texture = SDL_CreateTextureFromSurface(renderer, bmp);
 		SDL_FreeSurface(bmp);
-		scale.x = box.x1;
-		scale.y = box.y1;
-		scale.w = box.x2 - box.x1;
-		scale.h = box.y2 - box.y1;
+		scale.x = x1;
+		scale.y = y1;
+		scale.w = x2 - x1;
+		scale.h = y2 - y1;
 	
 		return true;
 	}
