@@ -101,6 +101,10 @@ endif()
 # Link with:
 # target_link_libraries(<target_name> <static_library_name>) #no ${} needed 
 
+# Tell Xcode where to find the static libs
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "/Users/benjaminkane/Programming/Bens-Game/build_xcode/lib/Debug/Debug")
+# Also doesn't work...
+
 project(tinyxml)
 
 include_directories(./tinyxml)
