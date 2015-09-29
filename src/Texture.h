@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <cassert>
 
 //TODO:
 //Questions about scaling. How will I scale an object?
@@ -40,8 +41,9 @@ public:
 	{
 		this->renderer = renderer;
 		SDL_Surface * bmp = SDL_LoadBMP(image_path.c_str());
+		assert(bmp != NULL && "BMP not loaded");
 		this->texture = SDL_CreateTextureFromSurface(renderer, bmp);
-		assert(texture != NULL); //hi there
+		assert(texture != NULL && "texture not created");
 		SDL_FreeSurface(bmp);
 		scale.x = 0;
 		scale.y = 0;
@@ -73,3 +75,4 @@ private:
 	SDL_Texture * texture;
 	bool valid{ true };
 };
+
