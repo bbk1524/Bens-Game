@@ -68,9 +68,9 @@ include_directories(
 	${SDL2_MIXER_INCLUDE_DIR}
 	${SDL2_TTF_INCLUDE_DIR}
 	# ${Box2D_SOURCE_DIR}
-	${tinyxml_SOURCE_DIR}
-	${SDL2_gfx_SOURCE_DIR}
-	${tinyxml2_SOURCE_DIR}
+	# ${tinyxml_SOURCE_DIR}
+	# ${SDL2_gfx_SOURCE_DIR}
+	# ${tinyxml2_SOURCE_DIR}
 )
 
 # What it should link against
