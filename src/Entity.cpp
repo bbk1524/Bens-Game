@@ -1,6 +1,8 @@
 #include "Entity.h"
 #include "Component.h"
 
+#include "TestComponent.h"
+
 #include <memory>
 
 
@@ -10,22 +12,13 @@
 
 //I want to use the standard system of each component having only data, and making "Systems" which read and write to the components on update
 Entity::Entity(std::string type)
+	: type(type)
 {
-	//if (type == "A")
-	//{
-	//	add_component<ComponentA>(56);
-	//}
-
-	//if (type == "B")
-	//{
-	//	add_component<ComponentB>(4, 3);
-	//}
-
-	//if (type == "AB")
-	//{
-	//	add_component<ComponentA>(2);
-	//	add_component<ComponentB>(this->get_component<ComponentA>()->a + 1, 1);
-	//}
+	if (type == "TestComponent")
+	{
+		add_component<TestComponent>();
+	}
+	
 }
 
 void Entity::update()

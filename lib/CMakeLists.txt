@@ -21,64 +21,64 @@ set(SDL2_LIB_LINUX "/usr/lib/x86_64-linux-gnu")
 
 # Find SDL2
 find_path(SDL2_INCLUDE_DIR SDL.h
-    PATHS
-    "${SDL2_INCLUDE_MAC}"
-    "${SDL2_INCLUDE_LINUX}"
+	PATHS
+	"${SDL2_INCLUDE_MAC}"
+	"${SDL2_INCLUDE_LINUX}"
 	"${SDL2_WIN}/include"
 )
 find_library(SDL2_LIBRARY NAMES SDL2
-    PATHS
-    "${SDL2_LIB_MAC}"
-    "${SDL2_LIB_LINUX}"
-    "${SDL2_WIN}/lib/x86/"
+	PATHS
+	"${SDL2_LIB_MAC}"
+	"${SDL2_LIB_LINUX}"
+	"${SDL2_WIN}/lib/x86/"
 )
 find_library(SDL2MAIN_LIBRARY NAMES SDL2main
-    PATHS
-    "${SDL2_LIB_MAC}"
-    "${SDL2_LIB_LINUX}"
+	PATHS
+	"${SDL2_LIB_MAC}"
+	"${SDL2_LIB_LINUX}"
 	"${SDL2_WIN}/lib/x86/"
 )
 
 # SDL2_image
 find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
-    PATHS
-    "${SDL2_INCLUDE_MAC}"
-    "${SDL2_INCLUDE_LINUX}"
-    "${SDL2_IMAGE_WIN}/include"
+	PATHS
+	"${SDL2_INCLUDE_MAC}"
+	"${SDL2_INCLUDE_LINUX}"
+	"${SDL2_IMAGE_WIN}/include"
 )
 find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image
-    PATHS
-    "${SDL2_LIB_MAC}"
-    "${SDL2_LIB_LINUX}"
-    "${SDL2_IMAGE_WIN}/lib/x86"
+	PATHS
+	"${SDL2_LIB_MAC}"
+	"${SDL2_LIB_LINUX}"
+	"${SDL2_IMAGE_WIN}/lib/x86"
 )
 
 # SDL2_mixer
 find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
-    PATHS
-    "${SDL2_INCLUDE_MAC}"
-    "${SDL2_INCLUDE_LINUX}"
-    "${SDL2_MIXER_WIN}/include"
+	PATHS
+	"${SDL2_INCLUDE_MAC}"
+	"${SDL2_INCLUDE_LINUX}"
+	"${SDL2_MIXER_WIN}/include"
 )
 find_library(SDL2_MIXER_LIBRARY NAMES SDL2_mixer
-    PATHS
-    "${SDL2_LIB_MAC}"
-    "${SDL2_LIB_LINUX}"
-    "${SDL2_MIXER_WIN}/lib/x86"
+	PATHS
+	"${SDL2_LIB_MAC}"
+	"${SDL2_LIB_LINUX}"
+	"${SDL2_MIXER_WIN}/lib/x86"
 )
 
 # SDL2_ttf
 find_path(SDL2_TTF_INCLUDE_DIR SDL_ttf.h
-    PATHS
-    "${SDL2_INCLUDE_MAC}"
-    "${SDL2_INCLUDE_LINUX}"
-    "${SDL2_TTF_WIN}/include"
+	PATHS
+	"${SDL2_INCLUDE_MAC}"
+	"${SDL2_INCLUDE_LINUX}"
+	"${SDL2_TTF_WIN}/include"
 )
 find_library(SDL2_TTF_LIBRARY NAMES SDL2_ttf
-    PATHS
-    "${SDL2_LIB_MAC}"
-    "${SDL2_LIB_LINUX}"
-    "${SDL2_TTF_WIN}/lib/x86"
+	PATHS
+	"${SDL2_LIB_MAC}"
+	"${SDL2_LIB_LINUX}"
+	"${SDL2_TTF_WIN}/lib/x86"
 )
 
 if(MSVC)

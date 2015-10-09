@@ -19,7 +19,7 @@ set(Add_Me_To_Exe "")
 function(make_group name)
 	create_unmade(${ARGN}) # ARGN expands to all unexpected arguments. In our case, everything after the first arg, name
 	#append _Files to the name
-	source_group(${name}_Files FILES ${ARGN})
+	source_group(${name} FILES ${ARGN})
 	# ${Add_Me_To_Exe} will be linked soon :)
 	set(Add_Me_To_Exe ${Add_Me_To_Exe} ${ARGN} PARENT_SCOPE)
 endfunction()
@@ -46,8 +46,12 @@ make_group(Graphics
 )
 
 make_group(Engine
-	Engine.h
-	Engine.cpp
+	#Engine.h
+	#Engine.cpp
+	EventManager.cpp
+	EventManager.h
+	EntityManager.cpp
+	EntityManager.h
 )
 
 make_group(Components
@@ -55,6 +59,11 @@ make_group(Components
 	Component.h
 	Entity.cpp
 	Entity.h
+)
+
+make_group(Components\\SpecificComponents
+	TestComponent.cpp
+	TestComponent.h
 )
 
 add_executable(${PROJECT_NAME}
@@ -67,10 +76,10 @@ include_directories(
 	${SDL2_IMAGE_INCLUDE_DIR}
 	${SDL2_MIXER_INCLUDE_DIR}
 	${SDL2_TTF_INCLUDE_DIR}
-	# ${Box2D_SOURCE_DIR}
-	# ${tinyxml_SOURCE_DIR}
-	# ${SDL2_gfx_SOURCE_DIR}
-	# ${tinyxml2_SOURCE_DIR}
+	${Box2D_SOURCE_DIR}
+	${tinyxml_SOURCE_DIR}
+	${SDL2_gfx_SOURCE_DIR}
+	${tinyxml2_SOURCE_DIR}
 )
 
 # What it should link against
@@ -79,7 +88,7 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_IMAGE_LIBRARY}
 	${SDL2_MIXER_LIBRARY}
 	${SDL2_TTF_LIBRARY}
-	# Box2D
+	Box2D
 	tinyxml
 	SDL2_gfx
 	tinyxml2

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "Component.h"
 
@@ -36,4 +37,5 @@ public:
 private:
 	std::vector<std::unique_ptr<Component>> components;
 	//bool is_valid{ false };
+	std::string type; //used for the graphics TextureMap
 };
