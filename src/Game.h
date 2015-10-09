@@ -1,10 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-//Print Input System's Output (undeffed until I need it...)
-#define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) { logger.log(#EVENT);}
-//#undef PRINT_EVENT
-
 //#include "GraphicsSystem.h"
 #include "InputSystem.h"
 #include "Definitions.h"
@@ -13,7 +9,6 @@
 
 extern Logger logger;
 
-
 class Game {
 public:
 
@@ -21,6 +16,7 @@ public:
 	{
 		bool init = input_system.init();
 		logger.check(COND(init), FILE_INFO);
+		get_base_path();
 	}
 	~Game()
 	{
@@ -35,6 +31,8 @@ public:
 		{
 			quit = true;
 		}
+		//Print Input System's Output (undeffed until I need it...)
+#define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) { logger.log(#EVENT);}
 
 #ifdef PRINT_EVENT
 		PRINT_EVENT(UP);
@@ -43,8 +41,10 @@ public:
 		PRINT_EVENT(RIGHT);
 		PRINT_EVENT(ACTION_ONE);
 		PRINT_EVENT(OTHER);
+		PRINT_EVENT(LEFT_MOUSE_DOWN);
+		PRINT_EVENT(RIGHT_MOUSE_DOWN);
 #endif
-
+#undef PRINT_EVENT
 		draw();
 	}
 

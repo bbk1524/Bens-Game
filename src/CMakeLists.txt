@@ -41,6 +41,8 @@ make_group(Graphics
 	Graphics.cpp
 	GraphicsSystem.h
 	GraphicsSystem.cpp
+	Texture.h
+	Texture.cpp
 )
 
 make_group(Engine
@@ -53,8 +55,6 @@ make_group(Components
 	Component.h
 	Entity.cpp
 	Entity.h
-	Texture.h
-	Texture.cpp
 )
 
 add_executable(${PROJECT_NAME}
