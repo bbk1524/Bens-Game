@@ -4,6 +4,7 @@
 
 Game::Game()
 {
+	//this->entity_manager = std::make_unique<EntityManager>();
 	bool init = input_system.init();
 	logger.check(COND(init), FILE_INFO);
 }

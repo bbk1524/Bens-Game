@@ -1,5 +1,5 @@
 #include "EntityManager.h"
-//#include "Game.h"
+
 void EntityManager::update()
 {
 	for (auto& e : entities)

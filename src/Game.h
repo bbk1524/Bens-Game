@@ -1,15 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
-//#include "GraphicsSystem.h"
 #include "InputSystem.h"
 #include "Definitions.h"
 #include "Logger.h"
 #include "Graphics.h"
-#include "Entity.h"
 
-//class EntityManager;
 #include "EntityManager.h"
+//class EntityManager;
+
+#include <memory>
 
 extern Logger logger;
 
@@ -31,6 +31,7 @@ private:
 	bool valid{ true };
 	Input_System input_system;
 	Graphics graphics;
+	/*std::unique_ptr<EntityManager> entity_manager{ nullptr };*/
 	EntityManager entity_manager;
 };
 

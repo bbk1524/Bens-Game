@@ -7,7 +7,6 @@
 //This needs to generate events for all entities, 
 // Then use EventManager to add and delete stuff
 
-
 class EntityManager
 {
 public:
