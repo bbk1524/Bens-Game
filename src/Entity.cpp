@@ -21,6 +21,14 @@ Entity::Entity(std::string type)
 	
 }
 
+Entity::Entity(Entity && other)
+	: type(other.type)
+{
+	components.insert(components.end(),
+		std::make_move_iterator(other.components.begin()),
+		std::make_move_iterator(other.components.end()));
+}
+
 void Entity::update()
 {
 	for (auto& c : components)

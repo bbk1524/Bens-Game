@@ -10,6 +10,7 @@ class Entity
 {
 public:
 	Entity(std::string type);
+	Entity(Entity && other);
 	~Entity() = default;
 	void update();
 
@@ -36,6 +37,6 @@ public:
 	}
 private:
 	std::vector<std::unique_ptr<Component>> components;
-	//bool is_valid{ false };
+	bool is_valid{ true };
 	std::string type; //used for the graphics TextureMap
 };

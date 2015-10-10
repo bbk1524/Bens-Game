@@ -1,4 +1,7 @@
 #include "TestComponent.h"
+#include "Logger.h"
+
+extern Logger logger;
 
 TestComponent::TestComponent(Entity * owner)
 	: Component(owner)
@@ -6,6 +9,7 @@ TestComponent::TestComponent(Entity * owner)
 
 void TestComponent::update()
 {
+	a++;
 }
 
 void TestComponent::init()

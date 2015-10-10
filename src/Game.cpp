@@ -31,7 +31,7 @@ void Game::update()
 #endif
 #undef PRINT_EVENT
 
-	//entity_manager.update(this);
+	entity_manager.update();
 
 	graphics.draw();
 }

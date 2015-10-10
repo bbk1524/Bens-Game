@@ -10,5 +10,6 @@ void EntityManager::update()
 
 EntityManager::EntityManager()
 {
-	//entities.push_back(Entity("TestComponent")));
+	//TODO: rm
+	entities.push_back(Entity("TestComponent"));
 }

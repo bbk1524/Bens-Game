@@ -31,9 +31,14 @@ int main (int argc, char** argv)
 
 	Entity e("TestComponent");
 	e.update();
-	logger.log(e.get_component<TestComponent>()->a);
-	std::vector<Entity*> entities;
-	entities.push_back(&e);
+	std::vector<Entity> ve;
+	ve.emplace_back("TestComponent");
+	ve.push_back(Entity("TestComponent"));
+	ve.push_back(std::move(e));
+	for (auto& en : ve)
+	{
+		en.update();
+	}
 	//I can't push back an entity becaue it has unique_ptr
 	//members. Entity needs a move constructor I think...
 
