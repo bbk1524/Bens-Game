@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <memory>
@@ -6,6 +7,7 @@
 
 #include "Component.h"
 
+#include "Game.h"
 class Entity
 {
 public:

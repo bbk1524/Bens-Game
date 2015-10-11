@@ -2,9 +2,20 @@
 #include "Definitions.h"
 #include "Logger.h"
 
-
 #include <SDL.h>
 #include <SDL_image.h>
+
+#if defined(_DEBUG) && defined(_WIN32)
+# define _CRTDBG_MAP_ALLOC
+# include <stdlib.h>
+# include <crtdbg.h>
+#endif
+
+#ifdef _DEBUG
+# define HH_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+# define HH_NEW new
+#endif
 
 //undef main for VS2015 so SDL_main won't be called
 //TODO: check if this actually hurts anything...
@@ -15,11 +26,6 @@
 //GLobal logger. Files which use this need 'extern Logger logger;' at their top
 Logger logger;
 
-//TODO: rm
-#include "Entity.h"
-#include "TestComponent.h"
-#include <vector>
-
 int main (int argc, char** argv)
 {
 	//init libraries at the top level to avoid game system dependencies and because I'm using SDL_main anyway
@@ -29,19 +35,6 @@ int main (int argc, char** argv)
 	init_return = IMG_Init(IMG_INIT_PNG);
 	logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
 
-	Entity e("TestComponent");
-	e.update();
-	std::vector<Entity> ve;
-	ve.emplace_back("TestComponent");
-	ve.push_back(Entity("TestComponent"));
-	ve.push_back(std::move(e));
-	for (auto& en : ve)
-	{
-		en.update();
-	}
-	//I can't push back an entity becaue it has unique_ptr
-	//members. Entity needs a move constructor I think...
-
 	Game game;
 	game.run();
 
@@ -49,5 +42,8 @@ int main (int argc, char** argv)
 	IMG_Quit();
 	SDL_Quit();
 
+#if defined(_DEBUG) && defined(_WIN32)
+	_CrtDumpMemoryLeaks();
+#endif
 	return 0;
 }

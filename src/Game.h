@@ -6,8 +6,7 @@
 #include "Logger.h"
 #include "Graphics.h"
 
-#include "EntityManager.h"
-//class EntityManager;
+class EntityManager;
 
 #include <memory>
 
@@ -17,7 +16,7 @@ class Game {
 public:
 
 	Game();
-
+	~Game();
 	//gimme a frame
 	void update();
 
@@ -31,8 +30,7 @@ private:
 	bool valid{ true };
 	Input_System input_system;
 	Graphics graphics;
-	/*std::unique_ptr<EntityManager> entity_manager{ nullptr };*/
-	EntityManager entity_manager;
+	std::unique_ptr<EntityManager> entity_manager{ nullptr };
 };
 
 #endif 

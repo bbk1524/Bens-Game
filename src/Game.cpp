@@ -4,9 +4,13 @@
 
 Game::Game()
 {
-	//this->entity_manager = std::make_unique<EntityManager>();
+	this->entity_manager = std::make_unique<EntityManager>();
 	bool init = input_system.init();
 	logger.check(COND(init), FILE_INFO);
+}
+
+Game::~Game()
+{
 }
 
 void Game::update()
@@ -32,7 +36,8 @@ void Game::update()
 #endif
 #undef PRINT_EVENT
 
-	entity_manager.update();
+	entity_manager->update(this);
+	//entity_manager.update();
 
 	graphics.draw();
 }

@@ -6,11 +6,14 @@
 
 //This needs to generate events for all entities, 
 // Then use EventManager to add and delete stuff
+class Game;
 
 class EntityManager
 {
 public:
-	void update();
+	//Forward declaration seems to require constructors and destructors
 	EntityManager();
+	~EntityManager();
+	void update(Game* game);
 	std::vector<Entity> entities;
 };
