@@ -2,11 +2,15 @@
 
 #include "EntityManager.h"
 
+#include "Logger.h"
+extern Logger logger;
+
 Game::Game()
 {
-	this->entity_manager = std::make_unique<EntityManager>();
+	this->entity_manager = std::make_unique<EntityManager>(this);
 	bool init = input_system.init();
 	logger.check(COND(init), FILE_INFO);
+	entity_manager->init(); //This breaks everything...
 }
 
 Game::~Game()

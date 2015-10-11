@@ -11,7 +11,7 @@
 class Entity
 {
 public:
-	Entity(std::string type);
+	Entity(std::string type, Game * game);
 	Entity(Entity && other);
 	~Entity() = default;
 	void update();
@@ -37,8 +37,10 @@ public:
 		pB->init(std::forward<Args>(args)...);
 		components.push_back(std::move(pB));
 	}
-private:
+//private:
 	std::vector<std::unique_ptr<Component>> components;
 	bool is_valid{ true };
 	std::string type; //used for the graphics TextureMap
+	bool is_alive{ true };
+	Game* game;
 };

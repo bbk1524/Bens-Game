@@ -7,14 +7,9 @@
 
 #if defined(_DEBUG) && defined(_WIN32)
 # define _CRTDBG_MAP_ALLOC
+# define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 # include <stdlib.h>
 # include <crtdbg.h>
-#endif
-
-#ifdef _DEBUG
-# define HH_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
-#else
-# define HH_NEW new
 #endif
 
 //undef main for VS2015 so SDL_main won't be called
@@ -28,6 +23,12 @@ Logger logger;
 
 int main (int argc, char** argv)
 {
+
+#if defined(_DEBUG) && defined(_WIN32)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+#endif
+
 	//init libraries at the top level to avoid game system dependencies and because I'm using SDL_main anyway
 	int init_return = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 	logger.check(COND(init_return == 0), FILE_INFO, SDL_GetError());
@@ -42,8 +43,5 @@ int main (int argc, char** argv)
 	IMG_Quit();
 	SDL_Quit();
 
-#if defined(_DEBUG) && defined(_WIN32)
-	_CrtDumpMemoryLeaks();
-#endif
 	return 0;
 }

@@ -10,15 +10,18 @@ void EntityManager::update(Game* game)
 	{
 		e.update();
 	}
-	logger.log(game->is_valid());
 }
 
-EntityManager::EntityManager()
+EntityManager::EntityManager(Game * game)
+	: game(game)
 {
-	//TODO: rm
-	entities.push_back(Entity("TestComponent"));
 }
 
 EntityManager::~EntityManager()
 {
+}
+
+void EntityManager::init()
+{
+	entities.push_back(Entity("TestComponent", game));
 }
