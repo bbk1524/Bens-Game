@@ -6,11 +6,12 @@
 #include "Logger.h"
 #include "Graphics.h"
 
-class EntityManager;
-
 #include <memory>
+#include <vector>
 
 extern Logger logger;
+
+class Entity;
 
 class Game {
 public:
@@ -30,7 +31,7 @@ private:
 	bool valid{ true };
 	Input_System input_system;
 	Graphics graphics;
-	std::unique_ptr<EntityManager> entity_manager{ nullptr };
+        std::vector<Entity> entities;
 };
 
 #endif 

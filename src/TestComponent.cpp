@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "Entity.h"
 extern Logger logger;
+#include "Game.h"
 
 TestComponent::TestComponent(Entity * owner)
 	: Component(owner)

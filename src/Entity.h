@@ -7,7 +7,8 @@
 
 #include "Component.h"
 
-#include "Game.h"
+class Game;
+
 class Entity
 {
 public:

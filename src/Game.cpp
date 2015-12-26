@@ -1,16 +1,16 @@
 #include "Game.h"
 
-#include "EntityManager.h"
-
 #include "Logger.h"
 extern Logger logger;
 
+#include "Entity.h"
+
 Game::Game()
 {
-	this->entity_manager = std::make_unique<EntityManager>(this);
 	bool init = input_system.init();
 	logger.check(COND(init), FILE_INFO);
-	entity_manager->init(); //This breaks everything...
+        entities.push_back(Entity("TestComponent", this));
+        logger.log(this->is_valid(), "CHECK ME");
 }
 
 Game::~Game()
@@ -40,8 +40,10 @@ void Game::update()
 #endif
 #undef PRINT_EVENT
 
-	entity_manager->update(this);
-	//entity_manager.update();
+        for (auto & e: entities)
+        {
+            e.update();
+        }
 
 	graphics.draw();
 }

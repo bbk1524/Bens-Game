@@ -2,6 +2,8 @@
 #include "Definitions.h"
 #include "Logger.h"
 
+#include <memory>
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -11,6 +13,7 @@
 # include <stdlib.h>
 # include <crtdbg.h>
 #endif
+
 
 //undef main for VS2015 so SDL_main won't be called
 //TODO: check if this actually hurts anything...
@@ -36,8 +39,8 @@ int main (int argc, char** argv)
 	init_return = IMG_Init(IMG_INIT_PNG);
 	logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
 
-	Game game;
-	game.run();
+        auto game = std::make_unique<Game>();
+	game->run();
 
 	//stop libraries
 	IMG_Quit();

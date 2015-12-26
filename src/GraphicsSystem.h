@@ -45,14 +45,14 @@ public:
 		return true;
 	}
 
-	void begin() 
+	void begin()
 	{
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer); //TODO: get this back...
 	}
 
 
-	void present() 
+	void present()
 	{
 		SDL_RenderPresent(renderer);
 	}
@@ -75,4 +75,4 @@ private:
 	bool valid{ true };
 };
 
-#endif 
+#endif

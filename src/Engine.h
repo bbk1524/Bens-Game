@@ -8,7 +8,7 @@ class Engine
 {
 public:
 	void update() {}
-	
+
 private:
 	EntityManager entity_manager;
 	EventManager event_manager;
