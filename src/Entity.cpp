@@ -10,7 +10,7 @@ extern Logger logger;
 
 #include "Game.h"
 
-//How the heck am I supposed to pass stuff to the 
+//How the heck am I supposed to pass stuff to the
 //init functions?
 //In my final, I passed in a Game* and an x,y,angle
 
@@ -27,7 +27,6 @@ Entity::Entity(std::string type, Game * game)
 	{
 		logger.log(type, "not found");
 	}
-	
 }
 
 Entity::Entity(Entity && other)

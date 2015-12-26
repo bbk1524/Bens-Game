@@ -59,6 +59,8 @@ make_group(Components
 	Component.h
 	Entity.cpp
 	Entity.h
+        CompPosition.cpp
+        CompPosition.h
 )
 
 make_group(Components\\SpecificComponents
