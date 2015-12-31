@@ -7,57 +7,59 @@ extern Logger logger;
 
 Game::Game()
 {
-	bool init = input_system.init();
-	logger.check(COND(init), FILE_INFO);
-        entities.push_back(Entity("TestComponent", this));
-        logger.log(this->is_valid(), "CHECK ME");
+    bool init = input_system.init();
+    logger.check(COND(init), FILE_INFO);
+    //bkane: Windows needs a vector of pointers
+    entities.push_back(std::make_unique<Entity>("TestComponent", this));
+    logger.log(this->is_valid(), "Game initialized!");
+
 }
 
+//NOTE (bbkane): need a destructor, even an empty one
 Game::~Game()
 {
 }
 
 void Game::update()
 {
-	input_system.update();
-	quit = input_system.get_event(game_event::QUIT);
+    input_system.update();
+    quit = input_system.get_event(game_event::QUIT);
 
-	//check if in menu
+    //check if in menu
 
-	//Print Input System's Output (undeffed until I need it...)
+    //Print Input System's Output (undeffed until I need it...)
 #define PRINT_EVENT(EVENT) if (input_system.get_event(game_event::EVENT)) { logger.log(#EVENT);}
-	//#undef PRINT_EVENT
 #ifdef PRINT_EVENT
-	PRINT_EVENT(UP);
-	PRINT_EVENT(DOWN);
-	PRINT_EVENT(LEFT);
-	PRINT_EVENT(RIGHT);
-	PRINT_EVENT(ACTION_ONE);
-	PRINT_EVENT(OTHER);
-	PRINT_EVENT(LEFT_MOUSE_DOWN);
-	PRINT_EVENT(RIGHT_MOUSE_DOWN);
-	PRINT_EVENT(QUIT);
+    PRINT_EVENT(UP);
+    PRINT_EVENT(DOWN);
+    PRINT_EVENT(LEFT);
+    PRINT_EVENT(RIGHT);
+    PRINT_EVENT(ACTION_ONE);
+    PRINT_EVENT(OTHER);
+    PRINT_EVENT(LEFT_MOUSE_DOWN);
+    PRINT_EVENT(RIGHT_MOUSE_DOWN);
+    PRINT_EVENT(QUIT);
 #endif
 #undef PRINT_EVENT
 
-        for (auto & e: entities)
-        {
-            e.update();
-        }
+    for (auto & e : entities)
+    {
+        e->update();
+    }
 
-	graphics.draw();
+    graphics.draw();
 }
 
 void Game::run()
 {
-	while (!quit)
-	{
-		update();
-	}
+    while (!quit)
+    {
+        update();
+    }
 }
 
 bool Game::is_valid() const
 {
-	return valid;
+    return valid;
 }
 

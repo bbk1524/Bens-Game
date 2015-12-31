@@ -61,6 +61,7 @@ public:
 		case SDLK_DOWN: return game_event::DOWN;
 		case SDLK_f: return game_event::ACTION_ONE;
 		case SDLK_q: return game_event::QUIT;
+		case SDLK_ESCAPE: return game_event::QUIT;
 		default: return game_event::OTHER;
 		}
 	}

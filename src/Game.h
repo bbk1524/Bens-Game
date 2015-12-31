@@ -16,22 +16,23 @@ class Entity;
 class Game {
 public:
 
-	Game();
-	~Game();
-	//gimme a frame
-	void update();
+    Game();
+    //NOTE (bbkane): Need a destructor, even if empty
+    ~Game();
+    //gimme a frame
+    void update();
 
-	//gimme all da frames
-	void run();
+    //gimme all da frames
+    void run();
 
-	bool is_valid() const;
+    bool is_valid() const;
 
 private:
-	bool quit{ false };
-	bool valid{ true };
-	Input_System input_system;
-	Graphics graphics;
-        std::vector<Entity> entities;
+    bool quit{ false };
+    bool valid{ true };
+    Input_System input_system;
+    Graphics graphics;
+    std::vector<std::unique_ptr<Entity>> entities;
 };
 
 #endif 
