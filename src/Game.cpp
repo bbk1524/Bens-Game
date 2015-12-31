@@ -11,10 +11,12 @@ Game::Game()
     bool init = input_system.init();
     logger.check(COND(init), FILE_INFO);
     //bkane: Windows needs a vector of pointers
-    entities.push_back(std::make_unique<Entity>("TestComponent", this));
-    auto ent = std::make_unique<Entity>("Unknown", this);
-    ent->add_component<CompPosition>(1.f, 1.f, 1.f);
-    entities.push_back(std::move(ent));
+    // entities.push_back(std::make_unique<Entity>("TestComponent", this));
+    // auto ent = std::make_unique<Entity>("Unknown", this);
+    // ent->add_component<CompPosition>(1.f, 1.f, 1.f);
+    // entities.push_back(std::move(ent));
+    // entities.push_back(Entity("TestComponent", this));
+    entities.push_back(new Entity("TestComponent", this));
     logger.log(this->is_valid(), "Game initialized!");
 
 }
@@ -22,6 +24,11 @@ Game::Game()
 //NOTE (bbkane): need a destructor, even an empty one
 Game::~Game()
 {
+    while(!entities.empty())
+    {
+        delete entities.back();
+        entities.pop_back();
+    }
 }
 
 void Game::update()

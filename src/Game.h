@@ -33,7 +33,9 @@ private:
     Input_System input_system;
     Graphics graphics;
     // Note (bkane): clang++ doesn't like this...
-    std::vector<std::unique_ptr<Entity>> entities;
+    // std::vector<std::unique_ptr<Entity>> entities;
+    // clang++ friendly version
+    std::vector<Entity*> entities;
 };
 
 #endif
