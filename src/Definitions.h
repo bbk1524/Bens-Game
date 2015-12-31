@@ -19,19 +19,25 @@ const int G_WINDOW_HEIGHT = 600;
 
 enum class game_event
 {
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	ALT_LEFT,
-	ALT_RIGHT,
-	ALT_UP,
-	ALT_DOWN,
-	ACTION_ONE,
-	ACTION_TWO,
-	LEFT_MOUSE_DOWN,
-	RIGHT_MOUSE_DOWN,
-	QUIT,
-	OTHER //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    ALT_LEFT,
+    ALT_RIGHT,
+    ALT_UP,
+    ALT_DOWN,
+    ACTION_ONE,
+    ACTION_TWO,
+    LEFT_MOUSE_DOWN,
+    RIGHT_MOUSE_DOWN,
+    QUIT,
+    OTHER //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
+};
+
+//TODO (bbkane): replace entity.type with this. When I konw what type of entities I want...
+enum class entity_type
+{
+    TEST
 };
 

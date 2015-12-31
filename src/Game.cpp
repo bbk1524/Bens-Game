@@ -4,6 +4,7 @@
 extern Logger logger;
 
 #include "Entity.h"
+#include "CompPosition.h"
 
 Game::Game()
 {
@@ -11,6 +12,9 @@ Game::Game()
     logger.check(COND(init), FILE_INFO);
     //bkane: Windows needs a vector of pointers
     entities.push_back(std::make_unique<Entity>("TestComponent", this));
+    auto ent = std::make_unique<Entity>("Unknown", this);
+    ent->add_component<CompPosition>(1.f, 1.f, 1.f);
+    entities.push_back(std::move(ent));
     logger.log(this->is_valid(), "Game initialized!");
 
 }

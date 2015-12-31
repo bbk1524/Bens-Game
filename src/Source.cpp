@@ -28,23 +28,23 @@ int main (int argc, char** argv)
 {
 
 #if defined(_DEBUG) && defined(_WIN32)
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 #endif
 
-	//init libraries at the top level to avoid game system dependencies and because I'm using SDL_main anyway
-	int init_return = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
-	logger.check(COND(init_return == 0), FILE_INFO, SDL_GetError());
+    //init libraries at the top level to avoid game system dependencies and because I'm using SDL_main anyway
+    int init_return = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
+    logger.check(COND(init_return == 0), FILE_INFO, SDL_GetError());
 
-	init_return = IMG_Init(IMG_INIT_PNG);
-	logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
+    init_return = IMG_Init(IMG_INIT_PNG);
+    logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
 
-        auto game = std::make_unique<Game>();
-	game->run();
+    auto game = Game();
+    game.run();
 
-	//stop libraries
-	IMG_Quit();
-	SDL_Quit();
+    //stop libraries
+    IMG_Quit();
+    SDL_Quit();
 
-	return 0;
+    return 0;
 }

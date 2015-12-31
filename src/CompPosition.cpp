@@ -17,6 +17,7 @@ void CompPosition::update()
     //check bounds in here for now, but I will want to change this..
     if( x > 10 || x < -10 ) { dx = - dx; }
     if( y > 10 || y < -10 ) { dy = - dy; }
+    logger.log("position: ", x, y);
 }
 
 void CompPosition::init(float x, float y, float angle)
