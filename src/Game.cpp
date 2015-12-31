@@ -74,7 +74,8 @@ void Game::run()
         fps_timer.reset();
         update();
         int milliseconds = fps_timer.get_ticks();
-        if (milliseconds < millisec_per_frame)
+        logger.log(FILE_INFO, milliseconds);
+        if (milliseconds < millisec_per_frame && !quit)
         {
             std::this_thread::sleep_for(
                 std::chrono::milliseconds(millisec_per_frame - milliseconds));

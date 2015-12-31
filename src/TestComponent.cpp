@@ -11,7 +11,7 @@ TestComponent::TestComponent(Entity * owner)
 void TestComponent::update()
 {
 	a++;
-	logger.log(get_owner()->game->is_valid());
+	// logger.log(get_owner()->game->is_valid());
 }
 
 void TestComponent::init()

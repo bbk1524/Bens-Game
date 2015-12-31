@@ -1,6 +1,9 @@
 #ifndef INPUT_SYSTEM
 #define INPUT_SYSTEM
 
+// #include "Logger.h"
+// extern Logger logger;
+
 #include "Definitions.h"
 #include <map>
 #include <SDL.h>
@@ -75,6 +78,7 @@ public:
 			if (event.type == SDL_QUIT)
 			{
 				current_events[game_event::QUIT] = true;
+                                return;
 			}
 
 			//handle keys
