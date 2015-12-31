@@ -27,6 +27,7 @@ Logger logger;
 int main (int argc, char** argv)
 {
 
+//To see memory leaks: use the Local Windows Debugger button
 #if defined(_DEBUG) && defined(_WIN32)
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
@@ -39,12 +40,14 @@ int main (int argc, char** argv)
     init_return = IMG_Init(IMG_INIT_PNG);
     logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
 
-    auto game = Game();
+    auto game = Game(30);
     game.run();
 
     //stop libraries
     IMG_Quit();
     SDL_Quit();
-
+    void *mem = malloc(sizeof game);
+    memset(mem, 0xA, sizeof(game));
+    free(mem);
     return 0;
 }

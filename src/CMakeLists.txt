@@ -34,6 +34,8 @@ make_group(Misc
     InputSystem.cpp
     Logger.h
     Logger.cpp
+    Timer.h
+    Timer.cpp
 )
 
 make_group(Graphics

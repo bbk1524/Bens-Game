@@ -5,9 +5,14 @@ extern Logger logger;
 
 #include "Entity.h"
 #include "CompPosition.h"
+#include "Timer.h"
 
-Game::Game()
+#include <thread>
+#include <chrono>
+
+Game::Game(int fps)
 {
+    millisec_per_frame = static_cast<int>(1000 / fps);
     bool init = input_system.init();
     logger.check(COND(init), FILE_INFO);
     //bkane: Windows needs a vector of pointers
@@ -66,7 +71,15 @@ void Game::run()
 {
     while (!quit)
     {
+        fps_timer.reset();
         update();
+        int milliseconds = fps_timer.get_ticks();
+        if (milliseconds < millisec_per_frame)
+        {
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(millisec_per_frame - milliseconds));
+        }
+
     }
 }
 

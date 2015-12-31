@@ -5,6 +5,7 @@
 #include "Definitions.h"
 #include "Logger.h"
 #include "Graphics.h"
+#include "Timer.h"
 
 #include <memory>
 #include <vector>
@@ -16,7 +17,7 @@ class Entity;
 class Game {
 public:
 
-    Game();
+    Game(int fps);
     //NOTE (bbkane): Need a destructor, even if empty
     ~Game();
     //gimme a frame
@@ -36,6 +37,8 @@ private:
     // std::vector<std::unique_ptr<Entity>> entities;
     // clang++ friendly version
     std::vector<Entity*> entities;
+    Timer fps_timer;
+    int millisec_per_frame;
 };
 
 #endif
