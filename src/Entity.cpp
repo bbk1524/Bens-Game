@@ -15,7 +15,7 @@ extern Logger logger;
 //init functions?
 //In my final, I passed in a Game* and an x,y,angle
 //Here, I want to just add components from the call, not the constructor
-//Ex: 
+//Ex:
 /*
 if (entity_manager.detects_collision_at(x,y)
 {
@@ -54,6 +54,10 @@ Entity::Entity(Entity && other)
         std::make_move_iterator(other.components.end()));
 }
 
+// Entity::~Entity()
+// {
+
+// }
 void Entity::update()
 {
     for (auto& c : components)

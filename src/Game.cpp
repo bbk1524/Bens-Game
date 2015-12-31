@@ -49,6 +49,7 @@ void Game::update()
     for (auto & e : entities)
     {
         e->update();
+        // e.update();
     }
 
     graphics.draw();

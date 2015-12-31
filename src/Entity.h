@@ -14,7 +14,7 @@ class Entity
 public:
 	Entity(std::string type, Game * game);
 	Entity(Entity && other);
-	~Entity() = default;
+	// ~Entity();
 	void update();
 
 	//Don't assign this to anything in callers!!!
