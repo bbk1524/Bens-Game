@@ -28,7 +28,7 @@ public:
 
     bool is_valid() const;
 
-private:
+// private:
     bool quit{ false };
     bool valid{ true };
     Input_System input_system;

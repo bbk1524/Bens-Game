@@ -1,6 +1,12 @@
 #ifndef GRAPHICS_SYSTEM_H
 #define GRAPHICS_SYSTEM_H
 
+#include "Logger.h"
+extern Logger logger;
+#include "Entity.h"
+#include "CompPosition.h"
+#include <vector>
+
 #include <SDL.h>
 #include <string>
 #include <SDL_image.h>
@@ -24,6 +30,9 @@ public:
 			// move the SDL_Init stuff to Game so I can add
 			// systems in order
 
+            this->width = window_width;
+            //NOTE (bkane): height is flipped
+            this->height = window_height;
 
 		window = SDL_CreateWindow(
 			window_name.c_str(),
@@ -51,6 +60,31 @@ public:
 		SDL_RenderClear(renderer); //TODO: get this back...
 	}
 
+        void update(std::vector<Entity*> & entities)
+        {
+            for(auto &en: entities)
+            {
+               if(en->type == "DrawMe")
+               {
+                    // Creat a rect at pos ( 50, 50 ) that's 50 pixels wide and 50 pixels high.
+                    SDL_Rect r;
+                    r.x = p_to_r_x(en->get_component<CompPosition>()->x);
+                    //Y is flipped..
+                    r.y = p_to_r_y(en->get_component<CompPosition>()->y);
+                    r.w = 50;
+                    r.h = 50;
+                    if(r.x +r.w > width){ r.x = width - 50; }
+                    if(r.y +r.h > height){ r.y = height - 50; }
+
+                    // Set render color to blue ( rect will be rendered in this color )
+                    SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
+
+                    // Render rect
+                    SDL_RenderFillRect( renderer, &r );
+               }
+            }
+        }
+
 
 	void present()
 	{
@@ -68,11 +102,28 @@ public:
 	{
 		return valid;
 	}
+        
+        //Physics to render coordinates
+        //This depends on the physics coords in [-10, 10]
+        int p_to_r_x(float x)
+        {
+            int b = int((width + 0)/2);
+            int m = int((0 - width)/(-20));
+            return (m * x + b);
+        }
 
+        inline int p_to_r_y(float y)
+        {
+            int b = int((height + 0)/2);
+            int m = int((0 - height)/(-20));
+            return (m * y + b);
+        }
 private:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	bool valid{ true };
+        int height;
+        int width;
 };
 
 #endif

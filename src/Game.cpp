@@ -13,6 +13,7 @@ extern Logger logger;
 Game::Game(int fps)
 {
     millisec_per_frame = static_cast<int>(1000 / fps);
+    logger.log("ms per frame: ", millisec_per_frame);
     bool init = input_system.init();
     logger.check(COND(init), FILE_INFO);
     //bkane: Windows needs a vector of pointers
@@ -21,6 +22,9 @@ Game::Game(int fps)
     // ent->add_component<CompPosition>(1.f, 1.f, 1.f);
     // entities.push_back(std::move(ent));
     // entities.push_back(Entity("TestComponent", this));
+    auto ent = new Entity("DrawMe", this);
+    ent->add_component<CompPosition>(1.f, 1.f, 1.f);
+    entities.push_back(ent);
     entities.push_back(new Entity("TestComponent", this));
     logger.log(this->is_valid(), "Game initialized!");
 
@@ -65,7 +69,7 @@ void Game::update()
         // e.update();
     }
 
-    graphics.draw();
+    graphics.draw(entities);
 }
 
 void Game::run()
@@ -76,7 +80,8 @@ void Game::run()
         update();
         int milliseconds = fps_timer.get_ticks();
         //logger.log(FILE_INFO, milliseconds);
-        if (milliseconds < millisec_per_frame && !quit)
+        //There is a HUGE input lag here
+        if (!quit && milliseconds < millisec_per_frame)
         {
             std::this_thread::sleep_for(
                 std::chrono::milliseconds(millisec_per_frame - milliseconds));
