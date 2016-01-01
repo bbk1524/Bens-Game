@@ -36,6 +36,7 @@ make_group(Misc
     Logger.cpp
     Timer.h
     Timer.cpp
+    tmpSource.cpp
 )
 
 make_group(Graphics

@@ -24,7 +24,7 @@
 //GLobal logger. Files which use this need 'extern Logger logger;' at their top
 Logger logger;
 
-int main (int argc, char** argv)
+int oldmain (int argc, char** argv)
 {
 
 //To see memory leaks: use the Local Windows Debugger button
@@ -34,7 +34,7 @@ int main (int argc, char** argv)
 #endif
 
     //init libraries at the top level to avoid game system dependencies and because I'm using SDL_main anyway
-    int init_return = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
+    int init_return = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER);
     logger.check(COND(init_return == 0), FILE_INFO, SDL_GetError());
 
     init_return = IMG_Init(IMG_INIT_PNG);
@@ -46,8 +46,6 @@ int main (int argc, char** argv)
     //stop libraries
     IMG_Quit();
     SDL_Quit();
-    void *mem = malloc(sizeof game);
-    memset(mem, 0xA, sizeof(game));
-    free(mem);
+
     return 0;
 }
