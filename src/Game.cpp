@@ -51,13 +51,14 @@ void Game::update()
     PRINT_EVENT(LEFT);
     PRINT_EVENT(RIGHT);
     PRINT_EVENT(ACTION_ONE);
+    PRINT_EVENT(ACTION_TWO);
     PRINT_EVENT(OTHER);
     PRINT_EVENT(LEFT_MOUSE_DOWN);
     PRINT_EVENT(RIGHT_MOUSE_DOWN);
     PRINT_EVENT(QUIT);
 #endif
 #undef PRINT_EVENT
-
+    logger.log(input_system.get_mouse_x(), input_system.get_mouse_y());
     for (auto & e : entities)
     {
         e->update();
@@ -74,7 +75,7 @@ void Game::run()
         fps_timer.reset();
         update();
         int milliseconds = fps_timer.get_ticks();
-        logger.log(FILE_INFO, milliseconds);
+        //logger.log(FILE_INFO, milliseconds);
         if (milliseconds < millisec_per_frame && !quit)
         {
             std::this_thread::sleep_for(

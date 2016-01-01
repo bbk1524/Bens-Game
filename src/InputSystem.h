@@ -1,8 +1,8 @@
 #ifndef INPUT_SYSTEM
 #define INPUT_SYSTEM
 
-// #include "Logger.h"
-// extern Logger logger;
+ #include "Logger.h"
+ extern Logger logger;
 
 #include "Definitions.h"
 #include <map>
@@ -10,14 +10,17 @@
 
 //Note, this class only registers input when the game window is open, NOT when only the console is up!
 
-class Input_System {
-public:
-    Input_System()
-    {
-        mouse_x = 0;
-        mouse_y = 0;
-    }
-    ~Input_System() = default;
+ class Input_System {
+ public:
+     Input_System()
+     {
+         mouse_x = 0;
+         mouse_y = 0;
+     }
+     ~Input_System()
+     {
+         SDL_GameControllerClose(game_controller);
+     }
 
     bool init()
     {
@@ -38,23 +41,20 @@ public:
         //quit
         current_events[game_event::QUIT] = false;
 
-        //translate SDL_Events of type key to Game_Events (not as fast as switch-case, but cleaner)
-        //tr_key[SDLK_LEFT] = game_event::LEFT;
-        //tr_key.emplace(SDLK_RIGHT, game_event::RIGHT);
-        //tr_key.emplace(SDLK_LEFT, game_event::LEFT);
-        //tr_key.emplace(SDLK_UP, game_event::UP);
-        //tr_key.emplace(SDLK_DOWN, game_event::DOWN);
-        //tr_key.emplace(SDLK_f, game_event::ACTION_ONE);
-        //TODO: add the rest of my keys. 
-
         //do that for mouse buttons too
         tr_mouse.emplace(SDL_BUTTON_LEFT, game_event::LEFT_MOUSE_DOWN);
         tr_mouse.emplace(SDL_BUTTON_RIGHT, game_event::RIGHT_MOUSE_DOWN);
 
+        //TODO: harden this drastically
+        int num_joysticks = SDL_NumJoysticks();
+        logger.log("Number of joysticks: ", num_joysticks);
+        game_controller =  SDL_GameControllerOpen(0);
+        logger.check(COND(!game_controller), "controller not found");
+
         return true;
     }
 
-    game_event tr_SDLK(int SDLK)
+    inline game_event tr_SDLK(int SDLK)
     {
         switch (SDLK) 
         {
@@ -69,6 +69,15 @@ public:
         }
     }
 
+    inline game_event tr_SDL_GameControllerButton()
+    {
+        //alias function to make it shorter
+        //TODO (bkane): is this slower? Should I use a #define?
+        const auto& button = SDL_GameControllerGetButton;
+        if (button(game_controller, SDL_CONTROLLER_BUTTON_DPAD_UP)) { return game_event::UP; }
+        else {return game_event::OTHER;}
+    }
+
     void update()
     {
 
@@ -78,11 +87,11 @@ public:
             if (event.type == SDL_QUIT)
             {
                 current_events[game_event::QUIT] = true;
-                                return;
+                return;
             }
 
             //handle keys
-            if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN)
+            else if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN)
             {
 
                 //set is_dwon to whether the key is being pressed
@@ -94,19 +103,37 @@ public:
 
 
             //handle mouse buttons
-            if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
+            else if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
             {
                 bool is_down = event.type == SDL_MOUSEBUTTONDOWN;
 
                 current_events[tr_mouse[event.button.button]] = is_down;
             }
+            //handle gampad
+            else if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP)
+            {
+                bool is_down = event.type == SDL_CONTROLLERBUTTONDOWN;
+
+                // make sure the button is down before assigning a true to that map!
+                //What the macro will expand to
+                current_events[game_event::UP] = SDL_GameControllerGetButton(game_controller, SDL_CONTROLLER_BUTTON_DPAD_UP) && is_down;
+#define MAKE_BUTTON_PRESS(g_event, SDL_cont_enum) current_events[game_event::g_event] = SDL_GameControllerGetButton(game_controller, SDL_cont_enum) && is_down
+                MAKE_BUTTON_PRESS(DOWN, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+                MAKE_BUTTON_PRESS(LEFT, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+                MAKE_BUTTON_PRESS(RIGHT, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+                MAKE_BUTTON_PRESS(ACTION_ONE, SDL_CONTROLLER_BUTTON_A);
+                MAKE_BUTTON_PRESS(ACTION_TWO, SDL_CONTROLLER_BUTTON_B);
+#undef MAKE_BUTTON_PRESS
+            }
+
 
             //handle mouse motion
-            if (event.type == SDL_MOUSEMOTION)
+            else if (event.type == SDL_MOUSEMOTION)
             {
                 this->mouse_x = event.motion.x;
                 this->mouse_y = event.motion.y;
             }
+
 
         }
     }
@@ -140,6 +167,7 @@ private:
     int mouse_x;
     int mouse_y;
     bool valid{ true };
+    SDL_GameController *game_controller;
 };
 
 #endif
