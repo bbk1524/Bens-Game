@@ -1,71 +1,112 @@
-#include <iostream>
-#include <string>
-
-#include "tinyxml2-master/tinyxml2.h"
-#include "Definitions.h"
-
-void print_elements(tinyxml2::XMLElement *root_node)
-{
-    //if (!root_node) { return; }
-    namespace xml = tinyxml2;
-    std::cout << root_node->Attribute("name") << std::endl;
-
-    xml::XMLElement *info_node = nullptr;
-    int x1, y1, x2, y2;
-    int off_x1, off_y1, off_x2, off_y2;
-    float perc_x1, perc_x2, perc_y1, perc_y2;
-
-    info_node = root_node->FirstChildElement("position");
-    if (info_node)
-    {
-#define FILL_INT_POSITIONS(name) info_node->QueryIntAttribute(#name,&name)
-        info_node->QueryIntAttribute("x1", &x1);
-        FILL_INT_POSITIONS(y1);
-        FILL_INT_POSITIONS(x2);
-        FILL_INT_POSITIONS(y2);
-        std::cout << x1<< y1<< x2<< y2 << std::endl;;
-    }
-    info_node = root_node->FirstChildElement("offset");
-    if (info_node)
-    {
-        FILL_INT_POSITIONS(off_x1);
-        FILL_INT_POSITIONS(off_y1);
-        FILL_INT_POSITIONS(off_x2);
-        FILL_INT_POSITIONS(off_y2);
-        std::cout << off_x1<< off_y1<< off_x2<< off_y2 << std::endl;
-    }
-#undef FILL_INT_POSITIONS
-    info_node = root_node->FirstChildElement("percentage");
-    if (info_node)
-    {
-#define FILL_FLOAT_POSITIONS(name) info_node->QueryFloatAttribute(#name, &name)
-        FILL_FLOAT_POSITIONS(perc_x1);
-        FILL_FLOAT_POSITIONS(perc_y1);
-        FILL_FLOAT_POSITIONS(perc_x2);
-        FILL_FLOAT_POSITIONS(perc_y2);
-        std::cout << perc_x1<< perc_x2<< perc_y1<< perc_y2 << std::endl;
-
-#undef FILL_FLOAT_POSITIONS
-    }
-    for (xml::XMLElement *node = root_node->FirstChildElement("box"); node; node = node->NextSiblingElement("box"))
-    {
-        print_elements(node);
-    }
-}
-
-#undef main
-int main()
-{
-    namespace xml = tinyxml2;
-    xml::XMLDocument doc;
-    std::string filepath = base_path + "config/layout.xml";
-    doc.LoadFile(filepath.c_str());
-    if(doc.ErrorID() != 0)
-    {
-        std::cout << "couldn't load" << std::endl;
-    }
-    //xml::XMLElement* element = doc.FirstChildElement("box");
-    //std::cout << element->Attribute("name") << std::endl;
-    print_elements(doc.FirstChildElement("box"));
-}
-
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//
+//#include "tinyxml2-master/tinyxml2.h"
+//#include "Definitions.h"
+//
+//struct Box
+//{
+//    std::string name;
+//    int x1, y1, x2, y2;
+//    void print()
+//    {
+//        std::cout << "name: " << name << "\n x1: " << x1 << " y1: " << y1 << " x2: " << x2 << " y2: " << y2 << std::endl;
+//    }
+//};
+//
+//
+//bool get_boxes(std::vector<Box> & boxes, Box *parent_box, tinyxml2::XMLElement *start_node, int window_width, int window_height)
+//{
+//    namespace xml = tinyxml2;
+//
+//    Box box;
+//    bool succeeded = false;
+//    xml::XMLElement *info_node = nullptr;
+//
+//    int x1, y1, x2, y2;
+//    int off_x1, off_y1, off_x2, off_y2;
+//    float perc_x1, perc_x2, perc_y1, perc_y2;
+//
+//    box.name = start_node->Attribute("name");
+//    info_node = start_node->FirstChildElement("position");
+//    if (info_node)
+//    {
+//        info_node->QueryIntAttribute("x1", &x1);
+//        info_node->QueryIntAttribute("y1", &y1);
+//        info_node->QueryIntAttribute("x2", &x2);
+//        info_node->QueryIntAttribute("y2", &y2);
+//
+//        if (x1 == -1) { x1 = 0; }
+//        if (y1 == -1) { y1 = 0; }
+//        if (x2 == -1) { x2 = window_width; }
+//        if (y2 == -1) { y2 = window_height; }
+//        box.x1 = x1;
+//        box.x2 = x2;
+//        box.y1 = y1;
+//        box.y2 = y2;
+//        succeeded = true;
+//    }
+//    info_node = start_node->FirstChildElement("offset");
+//    if (info_node && parent_box)
+//    {
+//        info_node->QueryIntAttribute("off_x1", &off_x1);
+//        info_node->QueryIntAttribute("off_y1", &off_y1);
+//        info_node->QueryIntAttribute("off_x2", &off_x2);
+//        info_node->QueryIntAttribute("off_y2", &off_y2);
+//        //std::cout << off_x1<< off_y1<< off_x2<< off_y2 << std::endl;
+//        box.x1 = parent_box->x1 + off_x1;
+//        box.y1 = parent_box->y1 + off_y1;
+//        box.x2 = parent_box->x2 - off_x2;
+//        box.y2 = parent_box->y2 - off_y2;
+//        succeeded = true;
+//    }
+//    info_node = start_node->FirstChildElement("percentage");
+//    if (info_node && parent_box)
+//    {
+//        info_node->QueryFloatAttribute("perc_x1", &perc_x1);
+//        info_node->QueryFloatAttribute("perc_y1", &perc_y1);
+//        info_node->QueryFloatAttribute("perc_x2", &perc_x2);
+//        info_node->QueryFloatAttribute("perc_y2", &perc_y2);
+//        //std::cout << perc_x1<< perc_x2<< perc_y1<< perc_y2 << std::endl;
+//        int parent_width = parent_box->x2 - parent_box->x1;
+//        int parent_height = parent_box->y2 - parent_box->y1;
+//        box.x1 = (int)(parent_box->x1 + perc_x1 * parent_width);
+//        box.y1 = (int)(parent_box->y1 + perc_y1 * parent_height);
+//        box.x2 = (int)(parent_box->x2 - perc_x2 * parent_width);
+//        box.y2 = (int)(parent_box->y2 - perc_y2 * parent_height);
+//        succeeded = true;
+//    }
+//    if (!succeeded) { return false; }
+//    boxes.push_back(box);
+//    for (xml::XMLElement *node = start_node->FirstChildElement("box"); node; node = node->NextSiblingElement("box"))
+//    {
+//        if (!get_boxes(boxes, &box, node, window_width, window_height))
+//        {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+//
+//std::vector<Box> make_boxes_from_config(std::string layout_file_path)
+//{
+//    namespace xml = tinyxml2;
+//    xml::XMLDocument doc;
+//    doc.LoadFile(layout_file_path.c_str());
+//    if(doc.ErrorID() != 0)
+//    {
+//        std::cout << "couldn't load" << std::endl;
+//    }
+//
+//    std::vector<Box> boxes;
+//    get_boxes(boxes,nullptr, doc.FirstChildElement("box"), 100, 100);
+//    return boxes;
+//}
+//
+//#undef main
+//int main()
+//{
+//    std::vector<Box> boxes = make_boxes_from_config(base_path + "config/layout.xml");
+//    for (auto &box : boxes) { box.print(); }
+//}

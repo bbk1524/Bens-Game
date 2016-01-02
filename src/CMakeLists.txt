@@ -46,6 +46,8 @@ make_group(Graphics
     GraphicsSystem.cpp
     Texture.h
     Texture.cpp
+    BoxUtils.h
+    BoxUtils.cpp
 )
 
 make_group(Engine
