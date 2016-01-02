@@ -7,11 +7,6 @@ std::string get_base_path();
 
 const std::string base_path = get_base_path();
 
-//You can format arguments using printf notations: EX: LOG_ERROR("problem with file %s", filename);
-//See http://c.learncodethehardway.org/book/ex20.html for more detail
-// Formatted strings must be char* (call std::string::c_str() on std::string)
-// #define LOG_ERROR(M, ...) fprintf(stderr, "[ERROR] (%s : %s : %d: ) " M "\n", __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__)
-
 //global variables yay!
 
 const int G_WINDOW_WIDTH = 800; //TODO: change this to read from an ini file. Maybe make it a field of Screen?

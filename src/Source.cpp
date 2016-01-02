@@ -24,7 +24,7 @@
 //GLobal logger. Files which use this need 'extern Logger logger;' at their top
 Logger logger;
 
-int main (int argc, char** argv)
+int oldmain (int argc, char** argv)
 {
 
 //To see memory leaks: use the Local Windows Debugger button

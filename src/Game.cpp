@@ -27,7 +27,6 @@ Game::Game(int fps)
     entities.push_back(ent);
     entities.push_back(new Entity("TestComponent", this));
     logger.log(this->is_valid(), "Game initialized!");
-
 }
 
 //NOTE (bbkane): need a destructor, even an empty one
