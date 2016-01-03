@@ -65,7 +65,6 @@ public:
     {
         for (auto &box : boxes)
         {
-            logger.log(box.name);
             SDL_Rect r;
             r.x = box.x1;
             r.y = box.y1;

@@ -6,9 +6,11 @@
 #include "Logger.h"
 #include "Graphics.h"
 #include "Timer.h"
+#include "Config.h"
 
 #include <memory>
 #include <vector>
+#include <string>
 
 extern Logger logger;
 
@@ -18,6 +20,7 @@ class Game {
 public:
 
     Game(int fps);
+    Game(std::string config_file_path);
     //NOTE (bbkane): Need a destructor, even if empty
     ~Game();
     //gimme a frame
@@ -39,6 +42,7 @@ public:
     std::vector<Entity*> entities;
     Timer fps_timer;
     int millisec_per_frame;
+    Config config;
 };
 
 #endif

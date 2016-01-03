@@ -18,5 +18,4 @@ std::ostream& operator<<(std::ostream& os, const Box& box);
 
 bool get_boxes(std::vector<Box> & boxes, Box *parent_box, tinyxml2::XMLElement *start_node, int window_width, int window_height);
 
-
 std::vector<Box> make_boxes_from_config(std::string layout_file_path, int window_width, int window_height);

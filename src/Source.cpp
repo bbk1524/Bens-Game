@@ -40,7 +40,7 @@ int main (int argc, char** argv)
     init_return = IMG_Init(IMG_INIT_PNG);
     logger.check(COND((init_return & IMG_INIT_PNG) == IMG_INIT_PNG), FILE_INFO, IMG_GetError());
 
-    auto game = Game(100);
+    auto game = Game(base_path + "config/config.xml");
     game.run();
 
     //stop libraries

@@ -37,6 +37,8 @@ make_group(Misc
     Timer.h
     Timer.cpp
     tmpSource.cpp
+    Config.h
+    Config.cpp
 )
 
 make_group(Graphics

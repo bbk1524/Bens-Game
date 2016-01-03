@@ -9,10 +9,16 @@ extern Logger logger;
 
 #include <thread>
 #include <chrono>
+#include <string>
 
-Game::Game(int fps)
+
+Game::Game(std::string config_file_path) :
+    config(config_file_path)
 {
-    millisec_per_frame = static_cast<int>(1000 / fps);
+    //TODO: I'd like to init this with a constructor...
+    //Unfortunately, I need to do that with config
+    graphics.init(config);
+    millisec_per_frame = static_cast<int>(1000 / config.fps);
     logger.log("ms per frame: ", millisec_per_frame);
     bool init = input_system.init();
     logger.check(COND(init), FILE_INFO);
@@ -28,11 +34,10 @@ Game::Game(int fps)
     entities.push_back(new Entity("TestComponent", this));
     logger.log(this->is_valid(), "Game initialized!");
 }
-
 //NOTE (bbkane): need a destructor, even an empty one
 Game::~Game()
 {
-    while(!entities.empty())
+    while (!entities.empty())
     {
         delete entities.back();
         entities.pop_back();
