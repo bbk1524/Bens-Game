@@ -12,7 +12,7 @@ const std::string base_path = get_base_path();
 const int G_WINDOW_WIDTH = 800; //TODO: change this to read from an ini file. Maybe make it a field of Screen?
 const int G_WINDOW_HEIGHT = 600;
 
-enum class game_event
+enum class game_event: int
 {
     LEFT,
     RIGHT,
@@ -27,7 +27,8 @@ enum class game_event
     LEFT_MOUSE_DOWN,
     RIGHT_MOUSE_DOWN,
     QUIT,
-    OTHER //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
+    OTHER, //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
+    SIZE
 };
 
 //TODO (bbkane): replace entity.type with this. When I konw what type of entities I want...
