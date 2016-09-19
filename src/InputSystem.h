@@ -1,13 +1,29 @@
 #ifndef INPUT_SYSTEM
 #define INPUT_SYSTEM
 
- #include "Logger.h"
- extern Logger logger;
-
-#include "Definitions.h"
-// #include <map>
 #include <array>
 #include <SDL.h>
+
+enum class game_event: int
+{
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    ALT_LEFT,
+    ALT_RIGHT,
+    ALT_UP,
+    ALT_DOWN,
+    ACTION_ONE,
+    ACTION_TWO,
+    LEFT_MOUSE_DOWN,
+    RIGHT_MOUSE_DOWN,
+    QUIT,
+    OTHER, //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
+    SIZE
+};
+
+// #include <map>
 
 //Note, this class only registers input when the game window is open, NOT when only the console is up!
 
@@ -48,9 +64,7 @@
 
         //TODO: harden this drastically
         int num_joysticks = SDL_NumJoysticks();
-        logger.log("Number of joysticks: ", num_joysticks);
         game_controller =  SDL_GameControllerOpen(0);
-        logger.check(COND(!game_controller), "controller not found");
 
         return true;
     }

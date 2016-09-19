@@ -24,55 +24,8 @@ function(make_group name)
     set(Add_Me_To_Exe ${Add_Me_To_Exe} ${ARGN} PARENT_SCOPE)
 endfunction()
 
-make_group(Misc
-    Source.cpp
-    Game.h
-    Game.cpp
-    Definitions.h
-    Definitions.cpp
-    InputSystem.h
-    InputSystem.cpp
-    Logger.h
-    Logger.cpp
-    Timer.h
-    Timer.cpp
-    tmpSource.cpp
-    Config.h
-    Config.cpp
-)
-
-make_group(Graphics
-    Graphics.h
-    Graphics.cpp
-    GraphicsSystem.h
-    GraphicsSystem.cpp
-    Texture.h
-    Texture.cpp
-    BoxUtils.h
-    BoxUtils.cpp
-)
-
-make_group(Engine
-    #Engine.h
-    #Engine.cpp
-    EventManager.cpp
-    EventManager.h
-    EntityManager.cpp
-    EntityManager.h
-)
-
-make_group(Components
-    Component.cpp
-    Component.h
-    Entity.cpp
-    Entity.h
-)
-
-make_group(Components\\SpecificComponents
-    TestComponent.cpp
-    TestComponent.h
-    CompPosition.cpp
-    CompPosition.h
+make_group(All
+    main.cpp
 )
 
 add_executable(${PROJECT_NAME}
