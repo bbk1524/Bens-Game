@@ -37,8 +37,8 @@ struct Shape
     }
     void adjust_to_pos(const Pos & pos)
     {
-        rect.x = pos.x - rect.w / 2;
-        rect.y = pos.y - rect.h / 2; // Is it subtraction or addition?
+        rect.x = static_cast<int>(pos.x) - rect.w / 2;
+        rect.y = static_cast<int>(pos.y) - rect.h / 2; // Is it subtraction or addition?
     }
 };
 
