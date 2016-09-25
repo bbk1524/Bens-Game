@@ -1,29 +1,11 @@
 #ifndef INPUT_SYSTEM
 #define INPUT_SYSTEM
 
+#include "Constants.h"
+
 #include <array>
 #include <SDL.h>
 
-enum class game_event: int
-{
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN,
-    ALT_LEFT,
-    ALT_RIGHT,
-    ALT_UP,
-    ALT_DOWN,
-    ACTION_ONE,
-    ACTION_TWO,
-    LEFT_MOUSE_DOWN,
-    RIGHT_MOUSE_DOWN,
-    QUIT,
-    OTHER, //Any other key. Put here to shut the warnings in InputSystem::tr_SDLK up
-    SIZE
-};
-
-// #include <map>
 
 //Note, this class only registers input when the game window is open, NOT when only the console is up!
 
@@ -41,29 +23,6 @@ enum class game_event: int
 
     bool init()
     {
-        ////keys
-        //current_events[game_event::LEFT] = false;
-        //current_events[game_event::RIGHT] = false;
-        //current_events[game_event::UP] = false;
-        //current_events[game_event::DOWN] = false;
-        //current_events[game_event::ALT_LEFT] = false;
-        //current_events[game_event::ALT_RIGHT] = false;
-        //current_events[game_event::ALT_UP] = false;
-        //current_events[game_event::ALT_DOWN] = false;
-        //current_events[game_event::ACTION_ONE] = false;
-        //current_events[game_event::ACTION_TWO] = false;
-        ////mouse
-        //current_events[game_event::LEFT_MOUSE_DOWN] = false;
-        //current_events[game_event::RIGHT_MOUSE_DOWN] = false;
-        ////quit
-        //current_events[game_event::QUIT] = false;
-
-        //do that for mouse buttons too
-        // tr_mouse.emplace(SDL_BUTTON_LEFT, game_event::LEFT_MOUSE_DOWN);
-        // tr_mouse.emplace(SDL_BUTTON_RIGHT, game_event::RIGHT_MOUSE_DOWN);
-
-        //TODO: harden this drastically
-        int num_joysticks = SDL_NumJoysticks();
         game_controller =  SDL_GameControllerOpen(0);
 
         return true;
@@ -96,8 +55,6 @@ enum class game_event: int
 
     inline game_event tr_SDL_GameControllerButton()
     {
-        //alias function to make it shorter
-        //TODO (bkane): is this slower? Should I use a #define?
         const auto& button = SDL_GameControllerGetButton;
         if (button(game_controller, SDL_CONTROLLER_BUTTON_DPAD_UP)) { return game_event::UP; }
         else {return game_event::OTHER;}
@@ -142,16 +99,6 @@ enum class game_event: int
             {
                 bool is_down = event.type == SDL_CONTROLLERBUTTONDOWN;
 
-                // make sure the button is down before assigning a true to that map!
-                //What the macro will expand to
-                // current_events[game_event::UP] = SDL_GameControllerGetButton(game_controller, SDL_CONTROLLER_BUTTON_DPAD_UP) && is_down;
-// #define MAKE_BUTTON_PRESS(g_event, SDL_cont_enum) current_events[game_event::g_event] = SDL_GameControllerGetButton(game_controller, SDL_cont_enum) && is_down
-                // MAKE_BUTTON_PRESS(DOWN, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-                // MAKE_BUTTON_PRESS(LEFT, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-                // MAKE_BUTTON_PRESS(RIGHT, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
-                // MAKE_BUTTON_PRESS(ACTION_ONE, SDL_CONTROLLER_BUTTON_A);
-                // MAKE_BUTTON_PRESS(ACTION_TWO, SDL_CONTROLLER_BUTTON_B);
-// #undef MAKE_BUTTON_PRESS
 #define MAKE_BUTTON_PRESS(g_event, SDL_cont_enum) current_events_array[static_cast<int>(game_event::g_event)] = SDL_GameControllerGetButton(game_controller, SDL_cont_enum) && is_down
                 MAKE_BUTTON_PRESS(UP, SDL_CONTROLLER_BUTTON_DPAD_UP);
                 MAKE_BUTTON_PRESS(DOWN, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
@@ -196,17 +143,13 @@ enum class game_event: int
     }
 
 private:
-    // std::map<game_event, bool> current_events;
     SDL_Event event;
-    //relying on the fact that an enum is implicitly converted to an int...
-    //std::map<int, game_event> tr_key;
-    // std::map<int, game_event> tr_mouse;
     int mouse_x;
     int mouse_y;
     bool valid{ true };
     SDL_GameController *game_controller;
     // starting to change this for speed!
-    std::array<int, static_cast<int>(game_event::SIZE)> current_events_array{};
+    std::array<bool, static_cast<int>(game_event::SIZE)> current_events_array{};
 };
 
 #endif

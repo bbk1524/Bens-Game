@@ -1,10 +1,10 @@
 #include "InputSystem.h"
+#include "Timer.h"
+#include "Constants.h"
 
 #include <SDL.h>
 #include <memory>
 
-const int G_WINDOW_WIDTH = 640;
-const int G_WINDOW_HEIGHT = 480;
 
 struct Entity
 {
@@ -26,23 +26,29 @@ void update_renderer(SDL_Renderer *renderer, SDL_Rect *position)
 
 void update_position(Input_System& input_system, SDL_Rect *position)
 {
+    constexpr int speed = 20;
     if( input_system.get_event(game_event::UP) )
     {
-        position->y--;
+        position->y -= speed;
     }
     if( input_system.get_event(game_event::DOWN) )
     {
-        position->y++;
+        position->y += speed;
     }
     if( input_system.get_event(game_event::LEFT) )
     {
-        position->x--;
+        position->x -= speed;
     }
     if( input_system.get_event(game_event::RIGHT) )
     {
-        position->x++;
+        position->x += speed;
     }
 }
+
+//VS2015 doesn't like SDL_main
+#if defined(_MSC_VER) && (_MSC_VER == 1900)
+# undef main
+#endif // _MSC_VER == 1900
 
 int main (int argc, char** argv)
 {
@@ -58,14 +64,15 @@ int main (int argc, char** argv)
     );
 
     // Setup renderer
-    SDL_Renderer* renderer = NULL;
-    renderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     Input_System input_sytem;
     input_sytem.init();
     input_sytem.update();
 
     Entity entity;
+
+    Timer timer;
 
     while (!input_sytem.get_event(game_event::QUIT))
     {
@@ -83,13 +90,15 @@ int main (int argc, char** argv)
         // Render the rect to the screen
         SDL_RenderPresent(renderer);
 
-        // Wait for 5 sec
-        // SDL_Delay( 5000 );
+        // Lock the fps
+        auto ticks = timer.get_ticks();
+        if (ticks < 1000 / G_FRAMES_PER_SEC) {
+            auto wait_time = 1000 / G_FRAMES_PER_SEC - ticks;
+            SDL_Delay(wait_time);
+        }
+        timer.reset();
     }
-
 
     SDL_DestroyWindow(window);
     SDL_Quit();
-
-    return EXIT_SUCCESS;
 }

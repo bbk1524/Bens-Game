@@ -2,6 +2,11 @@
 
 #include <chrono>
 
+Timer::Timer()
+{
+    this->reset();
+}
+
 void Timer::reset()
 {
     start = std::chrono::steady_clock::now();

@@ -6,8 +6,9 @@ class Timer
 {
     using milliseconds_t = std::chrono::duration < int, std::milli >;
 public:
-    Timer() = default;
+    Timer();
     void reset();
+    // returns number of milliseconds since 
     int get_ticks();
 
 private:

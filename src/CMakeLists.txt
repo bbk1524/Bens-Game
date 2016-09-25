@@ -25,6 +25,12 @@ function(make_group name)
 endfunction()
 
 make_group(All
+    Constants.h
+    Utils.h
+    Utils.cpp
+    Timer.h
+    Timer.cpp
+    InputSystem.h
     main.cpp
 )
 
