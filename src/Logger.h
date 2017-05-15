@@ -14,7 +14,7 @@
 #elif defined(__clang__)
 # define FUNCTION_NAME  STR(function_name_not_available)
 #elif defined(__GNUCC__) || defined(__GNUG__)
-# define FUNCTION_NAME __PRETTY_FUNCTION__
+# define FUNCTION_NAME STRINGIFY(__PRETTY_FUNCTION__)
 #endif
 
 #define SEP " -- "

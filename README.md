@@ -12,6 +12,13 @@ mkdir Build
 cd Build
 cmake -G "Visual Studio 12" ..
 ```
+
+# Buiding on Ubuntu
+
+1. Start with the VM in my backup repo
+2. `sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
+
+
 # Notes and TODOs
 Instead of copying Assets/ to a folder where Visual Studio or make can find it, I'm going to use SDL_GetBasePath()
 to do it.
